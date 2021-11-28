@@ -10,9 +10,17 @@ import org.jetbrains.annotations.NotNull;
 public class DebugCommands implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String string, @NotNull String[] strings) {
-       if(commandSender instanceof Player){
-           Player player = (Player) commandSender;
-           player.getInventory().setItem(1,  Main.getMain().getPowers().getDefensivePearl().defencivePearl());
+       if(string.equals("debug1")) {
+           if (commandSender instanceof Player) {
+               Player player = (Player) commandSender;
+               player.getInventory().setItem(1, Main.getMain().getPowers().getDefensivePearl().defencivePearl());
+           }
+       }
+       if(string.equals("debug2")) {
+           if (commandSender instanceof Player) {
+               Player player = (Player) commandSender;
+               //player.getInventory().setItem();
+           }
        }
         return false;
     }

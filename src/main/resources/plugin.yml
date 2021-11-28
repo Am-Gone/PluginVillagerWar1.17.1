@@ -6,3 +6,5 @@ author: Scramjet_#6310
 commands:
   debug1:
     description: "test"
+  debug2:
+    description: "test"

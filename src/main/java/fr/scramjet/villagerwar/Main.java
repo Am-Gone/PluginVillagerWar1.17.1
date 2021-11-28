@@ -23,6 +23,7 @@ public class Main extends JavaPlugin {
         main = this;
         plugin = this;
         getCommand("debug1").setExecutor(new DebugCommands());
+        getCommand("debug2").setExecutor(new DebugCommands());
         PluginManager manager = this.getServer().getPluginManager();
         manager.registerEvents(new TabListener(), this);
         manager.registerEvents(new PowersListener(), this);
