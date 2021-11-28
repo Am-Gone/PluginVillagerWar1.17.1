@@ -13,13 +13,13 @@ public class DebugCommands implements CommandExecutor {
        if(string.equals("debug1")) {
            if (commandSender instanceof Player) {
                Player player = (Player) commandSender;
-               player.getInventory().setItem(1, Main.getMain().getPowers().getDefensivePearl().defencivePearl());
+               player.getInventory().addItem( Main.getMain().getPowers().getDefensivePearl().defencivePearl());
            }
        }
        if(string.equals("debug2")) {
            if (commandSender instanceof Player) {
                Player player = (Player) commandSender;
-               //player.getInventory().setItem();
+               player.getInventory().addItem( Main.getMain().getPowers().getOffensivePearl().offensivePearl());
            }
        }
         return false;

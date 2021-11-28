@@ -12,44 +12,51 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.util.Vector;
 
 import java.util.List;
 
 
 public class OffensivePearl {
-    public NamespacedKey getDefencivePearlTag(){
+
+    public NamespacedKey getOffensivePearlTag(){
         NamespacedKey key = new NamespacedKey(Main.getPlugin(), "opearl");
         return key;
     }
     // Giver of the ItemStack DO NOT USE <.isSimilar> -> use the Tag ↑↑↑↑
-    public ItemStack defencivePearl(){
+    public ItemStack offensivePearl(){
         ItemStack pearl = new ItemStack(Material.ENDER_PEARL);
         ItemMeta pearlM = pearl.getItemMeta();
         pearlM.displayName(Component.text("Offensive Pearl").color(TextColor.color(255, 0, 0)));
-        pearlM.getPersistentDataContainer().set(getDefencivePearlTag(), PersistentDataType.INTEGER, 3);
+        pearlM.getPersistentDataContainer().set(getOffensivePearlTag(), PersistentDataType.INTEGER, 3);
         pearl.setItemMeta(pearlM);
         return pearl;
     }
-    public void defensivePearlAction(Player player){
-        Location payerl = player.getLocation();
+    public void offensivePearlAction(Player player){
+        Location playerl = player.getLocation();
         Double lastDistance = Double.MAX_VALUE;
         List<Entity> near = player.getNearbyEntities(25, 25, 25);
-        Player result = null;
+        Entity result = null;
         for(Entity p : near) {
-            if (p instanceof Player) {
+            if (p instanceof Entity) {
                 if (player == p) {
                     continue;
                 }
-                double distance = payerl.distance(p.getLocation());
+                double distance = playerl.distance(p.getLocation());
                 if (distance < lastDistance) {
                     lastDistance = distance;
-                    result = (Player) p;
+                    result =  p;
 
                 }
             }
         }
         if(result != null){
-            player.teleport(result.getLocation());
+            Location tloc = result.getLocation();
+            tloc.add(result.getLocation().getDirection().multiply(-2));
+            tloc.add(0, 1, 0);
+            tloc.setYaw(result.getLocation().getYaw());
+           player.teleport(tloc);
+
         }else {
             player.sendMessage("[Game]→ Unable to find a player");
         }
