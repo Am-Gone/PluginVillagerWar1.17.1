@@ -1,0 +1,8 @@
+main: fr.scramjet.villagerwar.Main
+name: VillagerWar-1.17.1
+version: 0.0.1
+api-version: 1.17
+author: Scramjet_#6310
+commands:
+  debug1:
+    description: "test"
