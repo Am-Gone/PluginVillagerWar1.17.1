@@ -16,12 +16,12 @@ public class PowersListener implements Listener {
            if(e.getPlayer().getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().equals(Main.getMain().getPowers().getDefensivePearl().defencivePearl().getItemMeta().getPersistentDataContainer())){
                e.setCancelled(true);
                e.getPlayer().updateInventory();
-               Main.getMain().getPowers().getDefensivePearl().defensivePearlAction(e.getPlayer());
+               Main.getMain().getPowers().getDefensivePearl().defensivePearlAction(e.getPlayer(), e.getPlayer().getInventory().getItemInMainHand());
            }
            if(e.getPlayer().getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().equals(Main.getMain().getPowers().getOffensivePearl().offensivePearl().getItemMeta().getPersistentDataContainer())){
                e.setCancelled(true);
                e.getPlayer().updateInventory();
-               Main.getMain().getPowers().getOffensivePearl().offensivePearlAction(e.getPlayer());
+               Main.getMain().getPowers().getOffensivePearl().offensivePearlAction(e.getPlayer(), e.getPlayer().getInventory().getItemInMainHand());
            }
 
 

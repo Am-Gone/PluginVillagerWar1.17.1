@@ -12,12 +12,34 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
-import org.bukkit.util.Vector;
+import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
 public class OffensivePearl {
+
+    private List<Player> usingPlayers = new ArrayList<>();
+
+    public void addPlayerWaitingList(Player player, ItemStack itemStack){
+        usingPlayers.add(player);
+        itemStack.setType(Material.MAGENTA_GLAZED_TERRACOTTA);
+        int duration = 15;
+        new BukkitRunnable() {
+            int dur = duration;
+            @Override
+            public void run() {
+
+                dur--;
+                if (dur <= 0) {
+                  usingPlayers.remove(player);
+                    itemStack.setType(Material.ENDER_PEARL);
+                    cancel();
+                }
+            }
+        }.runTaskTimer(Main.getPlugin(), 0, 20);
+    }
 
     public NamespacedKey getOffensivePearlTag(){
         NamespacedKey key = new NamespacedKey(Main.getPlugin(), "opearl");
@@ -32,35 +54,38 @@ public class OffensivePearl {
         pearl.setItemMeta(pearlM);
         return pearl;
     }
-    public void offensivePearlAction(Player player){
-        Location playerl = player.getLocation();
-        Double lastDistance = Double.MAX_VALUE;
-        List<Entity> near = player.getNearbyEntities(25, 25, 25);
-        Entity result = null;
-        for(Entity p : near) {
-            if (p instanceof Entity) {
-                if (player == p) {
-                    continue;
-                }
-                double distance = playerl.distance(p.getLocation());
-                if (distance < lastDistance) {
-                    lastDistance = distance;
-                    result =  p;
+    public void offensivePearlAction(Player player, ItemStack itemStack) {
+        if (!usingPlayers.contains(player)) {
+            addPlayerWaitingList(player, itemStack);
+            Location playerl = player.getLocation();
+            Double lastDistance = Double.MAX_VALUE;
+            List<Entity> near = player.getNearbyEntities(25, 25, 25);
+            Entity result = null;
+            for (Entity p : near) {
+                if (p instanceof Entity) {
+                    if (player == p) {
+                        continue;
+                    }
+                    double distance = playerl.distance(p.getLocation());
+                    if (distance < lastDistance) {
+                        lastDistance = distance;
+                        result = p;
 
+                    }
                 }
             }
+            if (result != null) {
+                Location tloc = result.getLocation();
+                tloc.add(result.getLocation().getDirection().multiply(-2));
+                tloc.add(0, 1, 0);
+                tloc.setYaw(result.getLocation().getYaw());
+                player.teleport(tloc);
+
+            } else {
+                player.sendMessage("[Game]→ Unable to find a player");
+            }
+
+
         }
-        if(result != null){
-            Location tloc = result.getLocation();
-            tloc.add(result.getLocation().getDirection().multiply(-2));
-            tloc.add(0, 1, 0);
-            tloc.setYaw(result.getLocation().getYaw());
-           player.teleport(tloc);
-
-        }else {
-            player.sendMessage("[Game]→ Unable to find a player");
-        }
-
-
     }
 }
