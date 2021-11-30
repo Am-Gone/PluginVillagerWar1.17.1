@@ -7,7 +7,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.World;
-import org.bukkit.enchantments.Enchantment;
+
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -15,16 +15,15 @@ import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 
-import java.util.ArrayList;
-import java.util.List;
+
 import java.util.concurrent.ThreadLocalRandom;
 
 public class DefensivePearl {
 
-    private List<Player> usingPlayers = new ArrayList<>();
+
 
     public void addPlayerWaitingList(Player player, ItemStack itemStack) {
-        usingPlayers.add(player);
+        Main.getMain().getPowers().addUsingPowerPlayer(player);
         itemStack.setType(Material.PINK_GLAZED_TERRACOTTA);
         int duration = 15;
         new BukkitRunnable() {
@@ -35,7 +34,7 @@ public class DefensivePearl {
 
                 dur--;
                 if (dur <= 0) {
-                    usingPlayers.remove(player);
+                    Main.getMain().getPowers().removeUsingPowerPlayer(player);
                     itemStack.setType(Material.ENDER_PEARL);
                     cancel();
                 }
@@ -59,7 +58,7 @@ public class DefensivePearl {
         return pearl;
     }
     public void defensivePearlAction(Player player, ItemStack itemStack){
-        if(!usingPlayers.contains(player)) {
+        if(!Main.getMain().getPowers().isUsingPowerPlayer(player)) {
             addPlayerWaitingList(player, itemStack);
             World world = player.getWorld();
             Location location = player.getLocation();

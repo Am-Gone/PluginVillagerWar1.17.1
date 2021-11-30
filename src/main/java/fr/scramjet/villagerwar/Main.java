@@ -18,6 +18,8 @@ public class Main extends JavaPlugin {
         plugin = this;
         getCommand("debug1").setExecutor(new DebugCommands());
         getCommand("debug2").setExecutor(new DebugCommands());
+        getCommand("debug3").setExecutor(new DebugCommands());
+        getCommand("debug4").setExecutor(new DebugCommands());
         PluginManager manager = this.getServer().getPluginManager();
         manager.registerEvents(new PowersListener(), this);
         getLogger().info("Plugin by Scramjet_#6310");

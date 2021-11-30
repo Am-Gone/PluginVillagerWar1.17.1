@@ -14,16 +14,16 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.ArrayList;
+
 import java.util.List;
 
 
 public class OffensivePearl {
 
-    private List<Player> usingPlayers = new ArrayList<>();
+
 
     public void addPlayerWaitingList(Player player, ItemStack itemStack){
-        usingPlayers.add(player);
+        Main.getMain().getPowers().addUsingPowerPlayer(player);
         itemStack.setType(Material.MAGENTA_GLAZED_TERRACOTTA);
         int duration = 15;
         new BukkitRunnable() {
@@ -33,7 +33,7 @@ public class OffensivePearl {
 
                 dur--;
                 if (dur <= 0) {
-                  usingPlayers.remove(player);
+                    Main.getMain().getPowers().removeUsingPowerPlayer(player);
                     itemStack.setType(Material.ENDER_PEARL);
                     cancel();
                 }
@@ -55,7 +55,7 @@ public class OffensivePearl {
         return pearl;
     }
     public void offensivePearlAction(Player player, ItemStack itemStack) {
-        if (!usingPlayers.contains(player)) {
+        if (!Main.getMain().getPowers().isUsingPowerPlayer(player)) {
             addPlayerWaitingList(player, itemStack);
             Location playerl = player.getLocation();
             Double lastDistance = Double.MAX_VALUE;
@@ -83,6 +83,8 @@ public class OffensivePearl {
 
             } else {
                 player.sendMessage("[Game]→ Unable to find a player");
+                Main.getMain().getPowers().removeUsingPowerPlayer(player);
+                itemStack.setType(Material.ENDER_PEARL);
             }
 
 

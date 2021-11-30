@@ -8,3 +8,7 @@ commands:
     description: "test"
   debug2:
     description: "test"
+  debug3:
+    description: "test"
+  debug4:
+    description: "test"
