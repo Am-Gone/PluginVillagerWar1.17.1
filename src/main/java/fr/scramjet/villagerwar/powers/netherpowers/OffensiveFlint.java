@@ -25,7 +25,7 @@ public class OffensiveFlint {
     public void addPlayerWaitingList(Player player, ItemStack itemStack){
         Main.getMain().getPowers().addUsingPowerPlayer(player);
         itemStack.setType(Material.MAGENTA_GLAZED_TERRACOTTA);
-        int duration = 15;
+        int duration = Main.getPlugin().getConfig().getInt("powerstime.time");
         new BukkitRunnable() {
             int dur = duration;
             @Override

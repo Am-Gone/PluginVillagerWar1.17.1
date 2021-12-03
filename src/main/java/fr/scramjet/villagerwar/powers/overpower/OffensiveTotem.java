@@ -1,4 +1,4 @@
-package fr.scramjet.villagerwar.powers.netherpowers;
+package fr.scramjet.villagerwar.powers.overpower;
 
 import fr.scramjet.villagerwar.Main;
 import net.kyori.adventure.text.Component;
@@ -11,37 +11,41 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import org.bukkit.potion.PotionType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class DefensiveFlint {
+public class OffensiveTotem {
 
     List<Player> regPlayer = new ArrayList<>();
     public boolean isRegPlayer(Player player){return regPlayer.contains(player);}
-    // Tag to reference the ItemStack
-    public NamespacedKey getOffensiveFlintTag(){
-        NamespacedKey key = new NamespacedKey(Main.getPlugin(), "dFlint");
+
+
+    public NamespacedKey getOffensiveFlintTag() {
+        NamespacedKey key = new NamespacedKey(Main.getPlugin(), "oTotem");
         return key;
     }
+
     // Giver of the ItemStack DO NOT USE <.isSimilar> -> use the Tag ↑↑↑↑
-    public ItemStack defensiveFlint(){
-        ItemStack flint = new ItemStack(Material.FLINT_AND_STEEL);
+    public ItemStack offensiveTotem() {
+        ItemStack flint = new ItemStack(Material.TOTEM_OF_UNDYING);
         ItemMeta flintM = flint.getItemMeta();
-        flintM.displayName(Component.text("Defensive Flint").color(TextColor.color(0, 0, 255)));
-        flintM.getPersistentDataContainer().set(getOffensiveFlintTag(), PersistentDataType.INTEGER, 2);
+        flintM.displayName(Component.text("Offensive Totem").color(TextColor.color(255, 0, 0)));
+        flintM.getPersistentDataContainer().set(getOffensiveFlintTag(), PersistentDataType.INTEGER, 45);
         flint.setItemMeta(flintM);
         return flint;
+
+
     }
-    public void defensiveFlintAction(Player player, ItemStack itemStack) {
+    public void offensiveTotemAction(Player player, ItemStack itemStack) {
         if (!Main.getMain().getPowers().isUsingPowerPlayer(player)) {
-            regPlayer.add(player);
             Main.getMain().getPowers().addUsingPowerPlayer(player);
+            itemStack.setType(Material.MAGENTA_GLAZED_TERRACOTTA);
+            regPlayer.add(player);
+            player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 1000, 2));
+            player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 1000, 1));
             int duration = Main.getPlugin().getConfig().getInt("powerstime.time");
-            player.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 1000, 0));
-            itemStack.setType(Material.GREEN_GLAZED_TERRACOTTA);
             new BukkitRunnable() {
                 int dur = duration;
 
@@ -51,16 +55,14 @@ public class DefensiveFlint {
                     dur--;
                     if (dur <= 0) {
                         regPlayer.remove(player);
-                        player.removePotionEffect(PotionEffectType.REGENERATION);
+                        player.removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE);
+                        player.removePotionEffect(PotionEffectType.SLOW);
                         Main.getMain().getPowers().removeUsingPowerPlayer(player);
-                        itemStack.setType(Material.FLINT_AND_STEEL);
+                        itemStack.setType(Material.TOTEM_OF_UNDYING);
                         cancel();
                     }
                 }
             }.runTaskTimer(Main.getPlugin(), 0, 20);
         }
     }
-
-
-
 }

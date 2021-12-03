@@ -34,6 +34,18 @@ public class DebugCommands implements CommandExecutor {
                 player.getInventory().addItem( Main.getMain().getPowers().getDefensiveFlint().defensiveFlint());
             }
         }
+        if(string.equals("debug5")){
+            if (commandSender instanceof Player) {
+                Player player = (Player) commandSender;
+                player.getInventory().addItem( Main.getMain().getPowers().getOffensiveTotem().offensiveTotem());
+            }
+        }
+        if(string.equals("debug6")){
+            if (commandSender instanceof Player) {
+                Player player = (Player) commandSender;
+                player.getInventory().addItem( Main.getMain().getPowers().getDefensiveTotem().defensiveTotem());
+            }
+        }
         return false;
     }
 }

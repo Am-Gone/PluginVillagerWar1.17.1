@@ -4,6 +4,8 @@ import fr.scramjet.villagerwar.powers.enderpowers.defensivepearl.DefensivePearl;
 import fr.scramjet.villagerwar.powers.enderpowers.offensivepearl.OffensivePearl;
 import fr.scramjet.villagerwar.powers.netherpowers.DefensiveFlint;
 import fr.scramjet.villagerwar.powers.netherpowers.OffensiveFlint;
+import fr.scramjet.villagerwar.powers.overpower.DefensiveTotem;
+import fr.scramjet.villagerwar.powers.overpower.OffensiveTotem;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -16,6 +18,7 @@ public class Powers {
    public void addUsingPowerPlayer(Player player){usingPowerPlayer.add(player);}
    public void removeUsingPowerPlayer(Player player){usingPowerPlayer.remove(player);}
    public boolean isUsingPowerPlayer(Player player){return usingPowerPlayer.contains(player);}
+    public void clearusingPowerPlayer(){usingPowerPlayer.clear();}
 
 
     DefensivePearl defensivePearl = new DefensivePearl();
@@ -32,9 +35,9 @@ public class Powers {
     DefensiveFlint defensiveFlint = new DefensiveFlint();
     public DefensiveFlint getDefensiveFlint(){return defensiveFlint;}
 
+    OffensiveTotem offensiveTotem = new OffensiveTotem();
+    public OffensiveTotem getOffensiveTotem() {return offensiveTotem;}
 
-
-
-
-
+    DefensiveTotem defensiveTotem = new DefensiveTotem();
+    public DefensiveTotem getDefensiveTotem() {return defensiveTotem;}
 }

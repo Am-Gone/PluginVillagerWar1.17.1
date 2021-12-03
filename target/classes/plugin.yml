@@ -12,3 +12,7 @@ commands:
     description: "test"
   debug4:
     description: "test"
+  debug5:
+    description: "test"
+  debug6:
+    description: "test"
