@@ -26,7 +26,6 @@ public class Main extends JavaPlugin {
         PluginManager manager = this.getServer().getPluginManager();
         manager.registerEvents(new PowersListener(), this);
         manager.registerEvents(new WalkerListener(), this);
-        getLogger().info("Plugin by Scramjet_#6310");
     }
 
     @Override
