@@ -19,12 +19,13 @@ import java.util.List;
 public class DefensiveTotem {
 
     List<Player> regPlayer = new ArrayList<>();
-    public boolean isRegPlayer(Player player){return regPlayer.contains(player);}
+    public boolean isRegPlayer(Player player) {
+        return regPlayer.contains(player);
+    }
 
 
     public NamespacedKey getDefensiveTotemTag() {
-        NamespacedKey key = new NamespacedKey(Main.getPlugin(), "dTotem");
-        return key;
+        return new NamespacedKey(Main.getPlugin(), "dTotem");
     }
 
     // Giver of the ItemStack DO NOT USE <.isSimilar> -> use the Tag ↑↑↑↑
@@ -39,8 +40,8 @@ public class DefensiveTotem {
 
     }
     public void offensiveTotemAction(Player player, ItemStack itemStack) {
-        if (!Main.getMain().getPowers().isUsingPowerPlayer(player)) {
-            Main.getMain().getPowers().addUsingPowerPlayer(player);
+        if (!Main.getMain().getPowers().isPlayerUsingPower(player)) {
+            Main.getMain().getPowers().addPlayerUsingPower(player);
             itemStack.setType(Material.MAGENTA_GLAZED_TERRACOTTA);
             regPlayer.add(player);
             player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 1000, 2));
@@ -59,7 +60,7 @@ public class DefensiveTotem {
                         player.removePotionEffect(PotionEffectType.WEAKNESS);
                         player.removePotionEffect(PotionEffectType.SPEED);
                         player.removePotionEffect(PotionEffectType.JUMP);
-                        Main.getMain().getPowers().removeUsingPowerPlayer(player);
+                        Main.getMain().getPowers().removePlayerUsingPower(player);
                         itemStack.setType(Material.TOTEM_OF_UNDYING);
                         cancel();
                     }

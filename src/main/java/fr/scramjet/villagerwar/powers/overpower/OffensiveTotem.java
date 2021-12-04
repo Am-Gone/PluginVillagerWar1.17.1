@@ -39,8 +39,8 @@ public class OffensiveTotem {
 
     }
     public void offensiveTotemAction(Player player, ItemStack itemStack) {
-        if (!Main.getMain().getPowers().isUsingPowerPlayer(player)) {
-            Main.getMain().getPowers().addUsingPowerPlayer(player);
+        if (!Main.getMain().getPowers().isPlayerUsingPower(player)) {
+            Main.getMain().getPowers().addPlayerUsingPower(player);
             itemStack.setType(Material.MAGENTA_GLAZED_TERRACOTTA);
             regPlayer.add(player);
             player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 1000, 2));
@@ -57,7 +57,7 @@ public class OffensiveTotem {
                         regPlayer.remove(player);
                         player.removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE);
                         player.removePotionEffect(PotionEffectType.SLOW);
-                        Main.getMain().getPowers().removeUsingPowerPlayer(player);
+                        Main.getMain().getPowers().removePlayerUsingPower(player);
                         itemStack.setType(Material.TOTEM_OF_UNDYING);
                         cancel();
                     }

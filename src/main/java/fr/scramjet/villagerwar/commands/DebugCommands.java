@@ -10,41 +10,20 @@ import org.jetbrains.annotations.NotNull;
 public class DebugCommands implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String string, @NotNull String[] strings) {
-       if(string.equals("debug1")) {
-           if (commandSender instanceof Player) {
-               Player player = (Player) commandSender;
-               player.getInventory().addItem( Main.getMain().getPowers().getDefensivePearl().defencivePearl());
-           }
-       }
-       if(string.equals("debug2")) {
-           if (commandSender instanceof Player) {
-               Player player = (Player) commandSender;
-               player.getInventory().addItem( Main.getMain().getPowers().getOffensivePearl().offensivePearl());
-           }
-       }
-       if(string.equals("debug3")){
-           if (commandSender instanceof Player) {
-               Player player = (Player) commandSender;
-               player.getInventory().addItem( Main.getMain().getPowers().getOffensiveFlint().offensiveFlint());
-           }
-       }
-        if(string.equals("debug4")){
-            if (commandSender instanceof Player) {
-                Player player = (Player) commandSender;
-                player.getInventory().addItem( Main.getMain().getPowers().getDefensiveFlint().defensiveFlint());
-            }
+        if (!(commandSender instanceof Player)) {
+            commandSender.sendMessage("§cVous devez être un joueur pour exécuter cette commande.");
+            return false;
         }
-        if(string.equals("debug5")){
-            if (commandSender instanceof Player) {
-                Player player = (Player) commandSender;
-                player.getInventory().addItem( Main.getMain().getPowers().getOffensiveTotem().offensiveTotem());
-            }
-        }
-        if(string.equals("debug6")){
-            if (commandSender instanceof Player) {
-                Player player = (Player) commandSender;
-                player.getInventory().addItem( Main.getMain().getPowers().getDefensiveTotem().defensiveTotem());
-            }
+
+        Player player = (Player) commandSender;
+
+        switch (string) {
+            case "debug1" -> player.getInventory().addItem(Main.getMain().getPowers().getDefensivePearl().defensivePearl());
+            case "debug2" -> player.getInventory().addItem(Main.getMain().getPowers().getOffensivePearl().offensivePearl());
+            case "debug3" -> player.getInventory().addItem(Main.getMain().getPowers().getOffensiveFlint().offensiveFlint());
+            case "debug4" -> player.getInventory().addItem(Main.getMain().getPowers().getDefensiveFlint().defensiveFlint());
+            case "debug5" -> player.getInventory().addItem(Main.getMain().getPowers().getOffensiveTotem().offensiveTotem());
+            case "debug6" -> player.getInventory().addItem(Main.getMain().getPowers().getDefensiveTotem().defensiveTotem());
         }
         return false;
     }

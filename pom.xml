@@ -14,7 +14,7 @@
     </properties>
 
     <repositories>
-        <!-- We add papermc's server se we can fetch their APIs -->
+        <!-- We add papermc's server so we can fetch their APIs -->
         <repository>
             <id>papermc</id>
             <url>https://papermc.io/repo/repository/maven-public/</url>

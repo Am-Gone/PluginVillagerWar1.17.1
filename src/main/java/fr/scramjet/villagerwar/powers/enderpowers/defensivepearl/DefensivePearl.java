@@ -15,15 +15,12 @@ import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 
-
 import java.util.concurrent.ThreadLocalRandom;
 
 public class DefensivePearl {
 
-
-
     public void addPlayerWaitingList(Player player, ItemStack itemStack) {
-        Main.getMain().getPowers().addUsingPowerPlayer(player);
+        Main.getMain().getPowers().addPlayerUsingPower(player);
         itemStack.setType(Material.PINK_GLAZED_TERRACOTTA);
         int duration = Main.getPlugin().getConfig().getInt("powerstime.time");
         new BukkitRunnable() {
@@ -31,10 +28,9 @@ public class DefensivePearl {
 
             @Override
             public void run() {
-
                 dur--;
                 if (dur <= 0) {
-                    Main.getMain().getPowers().removeUsingPowerPlayer(player);
+                    Main.getMain().getPowers().removePlayerUsingPower(player);
                     itemStack.setType(Material.ENDER_PEARL);
                     cancel();
                 }
@@ -44,12 +40,12 @@ public class DefensivePearl {
 
 
     // Tag to reference the ItemStack
-    public NamespacedKey getDefencivePearlTag(){
-        NamespacedKey key = new NamespacedKey(Main.getPlugin(), "dpearl");
-        return key;
+    public NamespacedKey getDefencivePearlTag() {
+        return new NamespacedKey(Main.getPlugin(), "dpearl");
     }
+
     // Giver of the ItemStack DO NOT USE <.isSimilar> -> use the Tag ↑↑↑↑
-    public ItemStack defencivePearl(){
+    public ItemStack defensivePearl() {
         ItemStack pearl = new ItemStack(Material.ENDER_PEARL);
         ItemMeta pearlM = pearl.getItemMeta();
         pearlM.displayName(Component.text("Defensive Pearl").color(TextColor.color(8, 0, 255)));
@@ -57,8 +53,9 @@ public class DefensivePearl {
         pearl.setItemMeta(pearlM);
         return pearl;
     }
-    public void defensivePearlAction(Player player, ItemStack itemStack){
-        if(!Main.getMain().getPowers().isUsingPowerPlayer(player)) {
+
+    public void defensivePearlAction(Player player, ItemStack itemStack) {
+        if (!Main.getMain().getPowers().isPlayerUsingPower(player)) {
             addPlayerWaitingList(player, itemStack);
             World world = player.getWorld();
             Location location = player.getLocation();
@@ -72,5 +69,4 @@ public class DefensivePearl {
             player.teleport(location);
         }
     }
-
 }

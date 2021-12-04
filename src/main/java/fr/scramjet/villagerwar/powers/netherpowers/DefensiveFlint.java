@@ -20,14 +20,18 @@ import java.util.List;
 public class DefensiveFlint {
 
     List<Player> regPlayer = new ArrayList<>();
-    public boolean isRegPlayer(Player player){return regPlayer.contains(player);}
-    // Tag to reference the ItemStack
-    public NamespacedKey getOffensiveFlintTag(){
-        NamespacedKey key = new NamespacedKey(Main.getPlugin(), "dFlint");
-        return key;
+
+    public boolean isRegPlayer(Player player) {
+        return regPlayer.contains(player);
     }
+
+    // Tag to reference the ItemStack
+    public NamespacedKey getOffensiveFlintTag() {
+        return new NamespacedKey(Main.getPlugin(), "dFlint");
+    }
+
     // Giver of the ItemStack DO NOT USE <.isSimilar> -> use the Tag ↑↑↑↑
-    public ItemStack defensiveFlint(){
+    public ItemStack defensiveFlint() {
         ItemStack flint = new ItemStack(Material.FLINT_AND_STEEL);
         ItemMeta flintM = flint.getItemMeta();
         flintM.displayName(Component.text("Defensive Flint").color(TextColor.color(0, 0, 255)));
@@ -35,10 +39,11 @@ public class DefensiveFlint {
         flint.setItemMeta(flintM);
         return flint;
     }
+
     public void defensiveFlintAction(Player player, ItemStack itemStack) {
-        if (!Main.getMain().getPowers().isUsingPowerPlayer(player)) {
+        if (!Main.getMain().getPowers().isPlayerUsingPower(player)) {
             regPlayer.add(player);
-            Main.getMain().getPowers().addUsingPowerPlayer(player);
+            Main.getMain().getPowers().addPlayerUsingPower(player);
             int duration = Main.getPlugin().getConfig().getInt("powerstime.time");
             player.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 1000, 0));
             itemStack.setType(Material.GREEN_GLAZED_TERRACOTTA);
@@ -52,7 +57,7 @@ public class DefensiveFlint {
                     if (dur <= 0) {
                         regPlayer.remove(player);
                         player.removePotionEffect(PotionEffectType.REGENERATION);
-                        Main.getMain().getPowers().removeUsingPowerPlayer(player);
+                        Main.getMain().getPowers().removePlayerUsingPower(player);
                         itemStack.setType(Material.FLINT_AND_STEEL);
                         cancel();
                     }
@@ -60,7 +65,4 @@ public class DefensiveFlint {
             }.runTaskTimer(Main.getPlugin(), 0, 20);
         }
     }
-
-
-
 }

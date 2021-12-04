@@ -13,12 +13,22 @@ import java.util.List;
 
 public class Powers {
 
+   private final List<Player> usingPowerPlayer = new ArrayList<>();
+   public void addPlayerUsingPower(Player player) {
+       usingPowerPlayer.add(player);
+   }
 
-   private List<Player> usingPowerPlayer = new ArrayList<>();
-   public void addUsingPowerPlayer(Player player){usingPowerPlayer.add(player);}
-   public void removeUsingPowerPlayer(Player player){usingPowerPlayer.remove(player);}
-   public boolean isUsingPowerPlayer(Player player){return usingPowerPlayer.contains(player);}
-    public void clearusingPowerPlayer(){usingPowerPlayer.clear();}
+   public void removePlayerUsingPower(Player player) {
+       usingPowerPlayer.remove(player);
+   }
+
+   public boolean isPlayerUsingPower(Player player) {
+       return usingPowerPlayer.contains(player);
+   }
+
+    public void clearPlayersUsingPower(){
+       usingPowerPlayer.clear();
+   }
 
 
     DefensivePearl defensivePearl = new DefensivePearl();

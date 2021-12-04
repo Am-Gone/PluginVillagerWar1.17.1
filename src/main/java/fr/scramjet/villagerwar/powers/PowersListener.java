@@ -17,7 +17,7 @@ public class PowersListener implements Listener {
     @EventHandler
     public void onRightClick(PlayerInteractEvent e){
        if(e.getAction().equals(Action.RIGHT_CLICK_AIR) || e.getAction().equals(Action.RIGHT_CLICK_BLOCK)){
-           if(e.getPlayer().getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().equals(Main.getMain().getPowers().getDefensivePearl().defencivePearl().getItemMeta().getPersistentDataContainer())){
+           if(e.getPlayer().getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().equals(Main.getMain().getPowers().getDefensivePearl().defensivePearl().getItemMeta().getPersistentDataContainer())){
                e.setCancelled(true);
                e.getPlayer().updateInventory();
                Main.getMain().getPowers().getDefensivePearl().defensivePearlAction(e.getPlayer(), e.getPlayer().getInventory().getItemInMainHand());
@@ -77,7 +77,7 @@ public class PowersListener implements Listener {
     @EventHandler
     public void onDie(PlayerDeathEvent e){
 
-        Main.getMain().getPowers().removeUsingPowerPlayer(e.getEntity().getPlayer());
+        Main.getMain().getPowers().removePlayerUsingPower(e.getEntity().getPlayer());
     }
 
 
